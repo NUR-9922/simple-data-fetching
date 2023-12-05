@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="mein">
+        <div class="profile">
+            <div class="profileImg"> <img id="usetImg" src="" alt=""></div>
+            <div class="name"></div>
+            <div class="username"></div>
+        </div>
+        <div class="userInfo">
+            <div class="country"></div>
+            <div class="state"></div>
+            <div class="city"></div>
+            <div class="pincoad"></div>
+            <div class="email"></div>
+        </div>
+    </div>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            font-size: 1.4rem;
+            text-rendering: optimizeLegibility;
+            text-decoration: none;
+        }
+
+        html,
+        body a {
+            text-decoration: none;
+            color: #000
+        }
+
+        .mein {
+            width: 100%;
+            height: 100vh;
+            background-color: #dadada;
+        }
+
+        .profile {
+            width: 100%;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            .profileImg {
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                margin-top: 20px;
+                overflow: hidden;
+
+                #usetImg {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            .name {
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: 700;
+                font-size: 20px;
+                margin-top: 20px;
+            }
+
+            .username {
+                font-family: roboto;
+                font-size: 15px;
+                margin-top: 10px;
+
+            }
+        }
+
+
+        .userInfo {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            font-family: roboto;
+            font-weight: 100;
+            font-size: 14px;
+        }
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+
+        let userfullName = "";
+        let userName = "";
+        let usetImgSrc;
+        let country;
+        let state;
+        let city;
+        let pincoad;
+        let email;
+        try {
+            let data = fetch("https://randomuser.me/api/");
+            data.then((response) => {
+               
+                return response.json();
+            }).then((jsonData) => {
+                userfullName = jsonData?.results?.[0].name?.title + " " + jsonData?.results?.[0].name?.first + " " + jsonData?.results?.[0].name?.last
+                userName = jsonData?.results?.[0].login?.username;
+                usetImgSrc = jsonData?.results?.[0].picture?.medium;
+                country = jsonData?.results?.[0].location?.country;
+                state = jsonData?.results?.[0].location?.state;
+                city = jsonData?.results?.[0].location?.city;
+                pincoad = jsonData?.results?.[0].location?.postcode;
+                email = jsonData?.results?.[0].email;
+                setUserData()
+
+            }).catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+
+
+
+        } catch (error) {
+            console.log(error);
+        }
+
+
+
+        function setUserData() {
+            document.querySelector(".name").textContent = userfullName;
+            document.querySelector(".username").textContent = `@ ${userName}`;
+            document.querySelector("#usetImg").src = usetImgSrc;
+            document.querySelector(".country").textContent = `Country : ${country}`;
+            document.querySelector(".state").textContent = `State : ${state}`;
+            document.querySelector(".city").textContent = `City : ${city}`;
+            document.querySelector(".pincoad").textContent = `Postcode : ${pincoad}`;
+            document.querySelector(".email").textContent = `Email : ${email}`;
+
+        }
+
+
+
+
+        // async function apiData() {
+        //     try {
+        //  let apiData = await fetch("https://randomuser.me/api/")
+
+        //  let jsonData = await apiData.json();
+        //  console.log(jsonData);
+        //     } catch (error) {
+        //  console.log(error);
+        //     }
+        // }
+        // apiData()
+
+    </script>
+
+
+
+</body>
+
+</html>
